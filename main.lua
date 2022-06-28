@@ -126,8 +126,8 @@ function draw_score()
 end
 
 function love.load()
-  menu_image = love.graphics.newImage("background_inicio.png")
-  gameover_image = love.graphics.newImage("game_over.png")
+  menu_image = love.graphics.newImage("game/background_start.png")
+  gameover_image = love.graphics.newImage("game/game_over.png")
 
   camera:setBounds(0, 0, game.width, 9999)
   love.graphics.setDefaultFilter('nearest', 'nearest')
@@ -141,11 +141,11 @@ function love.load()
 
   love.graphics.setFont(love.graphics.newFont(50))
 
-  platform.image_medieval = love.graphics.newImage("medieval-plataforma.png")
-  platform.image_realidade = love.graphics.newImage("realidade-plataforma.png")
-  platform.image_futuro = love.graphics.newImage("futuro-plataforma.png")
+  platform.image_medieval = love.graphics.newImage("platforms/medieval_platform.png")
+  platform.image_realidade = love.graphics.newImage("platforms/reality_platform.png")
+  platform.image_futuro = love.graphics.newImage("platforms/future_platform.png")
 
-  player.image = love.graphics.newImage("passado_direita.png")
+  player.image = love.graphics.newImage("characters/passado_direita.png")
   player.ground = player.y     -- This makes the character land on the plaform.
   player.y_velocity = 0        -- Whenever the character hasn't jumped yet, the Y-Axis velocity is always at 0.
 
@@ -234,12 +234,12 @@ function love.load()
   game.music_menu:play()
 
   -- background
-  background1 = love.graphics.newImage('1.png')
-  background2 = love.graphics.newImage('2.png')
-  background3 = love.graphics.newImage('3.png')
-  background4 = love.graphics.newImage('4.png')
-  background5 = love.graphics.newImage('5.png')
-  background6 = love.graphics.newImage('6.png')
+  background1 = love.graphics.newImage('times/medieval_start.png')
+  background2 = love.graphics.newImage('times/medieval.png')
+  background3 = love.graphics.newImage('times/medieval_end.png')
+  background4 = love.graphics.newImage('times/reality.png')
+  background5 = love.graphics.newImage('times/reality_end.png')
+  background6 = love.graphics.newImage('times/future.png')
 end
 
 function love.update(dt)
@@ -249,10 +249,10 @@ function love.update(dt)
     game.collision = false
     -- player movement
 
-    if player.direction == "right" then
-      player.image = love.graphics.newImage(player.current_time.."_direita.png")
+    if player.direction == "direita" then
+      player.image = love.graphics.newImage("/characters/"..player.current_time.."_direita.png")
     else
-      player.image = love.graphics.newImage(player.current_time.."_esquerda.png")
+      player.image = love.graphics.newImage("/characters/"..player.current_time.."_esquerda.png")
     end
 
     if love.keyboard.isDown("left") then
@@ -298,7 +298,7 @@ function love.update(dt)
         game.music_realidade:stop()
         game.music_futuro:stop()
 
-        game.state = "gameover"
+        game.state = "game/gameover"
         game.game_over_sound:play()
       else
         player.ground = player.y
@@ -364,7 +364,7 @@ function love.draw()
     draw_score()
 
     camera:unset()
-  elseif game.state == "gameover" then
+  elseif game.state == "game/gameover" then
     love.graphics.draw(gameover_image, 0, 0)
     love.graphics.setColor(255, 255, 255)
     love.graphics.print(game.score, game.width / 2 - 20, game.height / 2 + 30)
